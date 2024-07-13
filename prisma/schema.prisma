@@ -20,6 +20,7 @@ model Character {
   class              String
   specialization     String
   mplusRatingRecords MplusRatingRecord[]
+  gameEvents             GameEvent[]
 }
 
 model MplusRatingRecord {
@@ -29,4 +30,15 @@ model MplusRatingRecord {
   rating      Float
   date        DateTime  @default(now())
   characterId Int
+}
+
+model GameEvent {
+  id           Int         @id @default(autoincrement())
+  createdAt    DateTime    @default(now())
+  updatedAt    DateTime    @updatedAt
+  name         String
+  description  String
+  startDate    DateTime
+  endDate      DateTime
+  participants Character[]
 }

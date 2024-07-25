@@ -16,11 +16,8 @@ model Character {
   updatedAt          DateTime            @updatedAt
   name               String
   realm              String
-  faction            String
-  class              String
-  specialization     String
   mplusRatingRecords MplusRatingRecord[]
-  gameEvents             GameEvent[]
+  gameEvents         GameEvent[]
 }
 
 model MplusRatingRecord {

@@ -5,7 +5,7 @@ import type { Character } from '@prisma/client';
 
 export default class RaiderIOWorker {
 	static #instance: RaiderIOWorker;
-	private static TIME_INTERVAL_SECONDS = 60;
+	private static TIME_INTERVAL = 12 * 60 * 60 * 1000;
 
 	private constructor() {
 		this.startWorker();
@@ -56,6 +56,6 @@ export default class RaiderIOWorker {
 
 		setInterval(() => {
 			this.UpdateRaiderIOScoresForAllCharacters();
-		}, RaiderIOWorker.TIME_INTERVAL_SECONDS * 1000);
+		}, RaiderIOWorker.TIME_INTERVAL);
 	}
 }

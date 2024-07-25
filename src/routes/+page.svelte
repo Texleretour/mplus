@@ -1,22 +1,116 @@
 <script lang="ts">
-	import Timer from '$lib/Timer.svelte';
 	import type { PageData } from './$types';
 
 	export let data: PageData;
 
-	console.log(data);
+	let message = "";
+	let isLoading = false;
+	let name = '';
+	let realm = '';
+
+	async function checkCharacterExists() {
+		isLoading = true;
+		message = "";
+
+		if (name === "" || realm === "") {
+			message = "Veuillez remplir les champs";
+			isLoading = false;
+			return;
+		}
+
+		const response = await fetch(
+			`https://raider.io/api/v1/characters/profile?region=eu&realm=${realm}&name=${name}&fields=mythic_plus_scores_by_season%3Acurrent`
+		);
+		const data = await response.json();
+
+		if (data.statusCode === 400) {
+			console.log(data.message);
+			message = data.message;
+			isLoading = false;
+
+			return {
+				characterFound: false,
+				error: data.message
+			};
+		}
+
+		const character = {
+			name: data.name,
+			realm: data.realm,
+		};
+
+		
+	}
 </script>
 
-<Timer />
+<dialog id="my_modal_3" class="modal">
+	<div class="modal-box">
+		<form method="dialog">
+			<button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
+		</form>
+		<h3 class="text-lg font-bold pb-8">Tracker un personnage</h3>
+		<form action="" class="flex flex-col gap-4">
+			<label class="input input-bordered flex items-center gap-2">
+				Nom
+				<input type="text" class="grow" placeholder="Putarhq" bind:value={name}/>
+			</label>
 
-<h1 class="text-2xl">Leaderboard</h1>
+			<label class="input input-bordered flex items-center gap-2">
+				Royaume
+				<input type="text" class="grow" placeholder="Rashgarroth" bind:value={realm}/>
+			</label>
 
-<div>
-	{#each data.feed as character (character.id)}
-		<div class="flex-column">
-			<h2>{character.name}</h2>
-			<p>{character.realm}</p>
-			<p>{character.mplusRatingRecords[0].rating}</p>
-		</div>
-	{/each}
+			<div class="flex flex-col w-full items-end gap-2">
+				<p class="italic">L'ajout d'un personnage peut prendre plusieurs heures.</p>
+				<div class="w-full flex justify-end items-center gap-2">
+					{#if message != ""}
+						<p class="text-error font-bold">{message}</p>
+					{/if}
+					{#if isLoading}
+						<button class="btn btn-square">
+							<span class="loading loading-spinner"></span>
+						</button>
+					{:else}
+						<button class="btn btn-accent" on:click={checkCharacterExists}>Tracker</button>
+					{/if}
+				</div>
+			</div>
+		</form>
+	</div>
+</dialog>
+
+<div class="p-10 flex gap-2 justify-between">
+	<h1 class="text-2xl">Leaderboard</h1>
+
+	<btn class="btn btn-accent" onclick="my_modal_3.showModal()">+ Tracker un personnage</btn>
+</div>
+
+<div class="overflow-x-auto">
+	<table class="table">
+		<!-- head -->
+		<thead>
+			<tr>
+				<th>Rank</th>
+				<th>Character</th>
+				<th>Rating</th>
+			</tr>
+		</thead>
+		<tbody>
+			{#each data.characters as character, i}
+				<tr class="hover">
+					<td>{i + 1}</td>
+					<!-- <a href={`https://raider.io/characters/eu/${character.realm}/${character.name}`}> -->
+					<a href={`/${character.realm}/${character.name}`}>
+						<td>{character.name + '-' + character.realm}</td>
+					</a>
+
+					<td>{character.mplusRatingRecords[0].rating}</td>
+				</tr>
+			{/each}
+		</tbody>
+	</table>
+</div>
+
+<div class="p-10 flex gap-2 justify-end items-end">
+	<btn class="btn btn-accent" onclick="my_modal_3.showModal()">+ Tracker un personnage</btn>
 </div>

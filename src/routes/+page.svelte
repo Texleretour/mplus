@@ -3,44 +3,44 @@
 
 	export let data: PageData;
 
-	let message = "";
-	let isLoading = false;
-	let name = '';
-	let realm = '';
+	// let message = "";
+	// let isLoading = false;
+	// let name = '';
+	// let realm = '';
 
-	async function checkCharacterExists() {
-		isLoading = true;
-		message = "";
+	// async function checkCharacterExists() {
+	// 	isLoading = true;
+	// 	message = "";
 
-		if (name === "" || realm === "") {
-			message = "Veuillez remplir les champs";
-			isLoading = false;
-			return;
-		}
+	// 	if (name === "" || realm === "") {
+	// 		message = "Veuillez remplir les champs";
+	// 		isLoading = false;
+	// 		return;
+	// 	}
 
-		const response = await fetch(
-			`https://raider.io/api/v1/characters/profile?region=eu&realm=${realm}&name=${name}&fields=mythic_plus_scores_by_season%3Acurrent`
-		);
-		const data = await response.json();
+	// 	const response = await fetch(
+	// 		`https://raider.io/api/v1/characters/profile?region=eu&realm=${realm}&name=${name}&fields=mythic_plus_scores_by_season%3Acurrent`
+	// 	);
+	// 	const data = await response.json();
 
-		if (data.statusCode === 400) {
-			console.log(data.message);
-			message = data.message;
-			isLoading = false;
+	// 	if (data.statusCode === 400) {
+	// 		console.log(data.message);
+	// 		message = data.message;
+	// 		isLoading = false;
 
-			return {
-				characterFound: false,
-				error: data.message
-			};
-		}
+	// 		return {
+	// 			characterFound: false,
+	// 			error: data.message
+	// 		};
+	// 	}
 
-		const character = {
-			name: data.name,
-			realm: data.realm,
-		};
+	// 	const character = {
+	// 		name: data.name,
+	// 		realm: data.realm,
+	// 	};
 
 		
-	}
+	// }
 </script>
 
 <dialog id="my_modal_3" class="modal">
@@ -49,30 +49,21 @@
 			<button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
 		</form>
 		<h3 class="text-lg font-bold pb-8">Tracker un personnage</h3>
-		<form action="" class="flex flex-col gap-4">
+		<form method="POST" class="flex flex-col gap-4">
 			<label class="input input-bordered flex items-center gap-2">
 				Nom
-				<input type="text" class="grow" placeholder="Putarhq" bind:value={name}/>
+				<input name="name" type="text" class="grow" placeholder="Putarhq"/>
 			</label>
 
 			<label class="input input-bordered flex items-center gap-2">
 				Royaume
-				<input type="text" class="grow" placeholder="Rashgarroth" bind:value={realm}/>
+				<input name="realm" type="text" class="grow" placeholder="Rashgarroth"/>
 			</label>
 
 			<div class="flex flex-col w-full items-end gap-2">
 				<p class="italic">L'ajout d'un personnage peut prendre plusieurs heures.</p>
 				<div class="w-full flex justify-end items-center gap-2">
-					{#if message != ""}
-						<p class="text-error font-bold">{message}</p>
-					{/if}
-					{#if isLoading}
-						<button class="btn btn-square">
-							<span class="loading loading-spinner"></span>
-						</button>
-					{:else}
-						<button class="btn btn-accent" on:click={checkCharacterExists}>Tracker</button>
-					{/if}
+					<button class="btn btn-accent">Tracker</button>
 				</div>
 			</div>
 		</form>

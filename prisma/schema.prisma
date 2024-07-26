@@ -17,7 +17,7 @@ model Character {
   name               String
   realm              String
   mplusRatingRecords MplusRatingRecord[]
-  gameEvents         GameEvent[]
+  gameEvents         GameEvent[]          
 }
 
 model MplusRatingRecord {

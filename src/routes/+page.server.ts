@@ -1,4 +1,5 @@
 import prisma from '$lib/prisma';
+import { getActiveEvent } from '$lib/server/gameEventRepository';
 import type { PageServerLoad, Actions } from './$types';
 
 export const load = (async () => {
@@ -29,6 +30,13 @@ export const actions = {
 		const name = data.get('name');
 		const realm = data.get('realm');
 
+		const activeEvent = await getActiveEvent();
+
+		if (!activeEvent) {
+			console.log('No active event found');
+			return;
+		}
+		
 		const characterData = await findCharacter(name, realm);
 
 		if (!characterData) {
@@ -39,7 +47,12 @@ export const actions = {
 		const createdCharacter = await prisma.character.create({
 			data: {
 				name: characterData.name,
-				realm: characterData.realm
+				realm: characterData.realm,
+				gameEvents: {
+					connect: {
+						id: activeEvent.id
+					}
+				}
 			}
 		});
 
@@ -48,7 +61,7 @@ export const actions = {
 				rating: characterData.rating,
 				characterId: createdCharacter.id
 			}
-		})
+		});
 	}
 } satisfies Actions;
 

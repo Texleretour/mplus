@@ -7,11 +7,13 @@
 </script>
 
 <main class="m-20">
-	
 	<div class="flex justify-center">
-		<Timer date={data.gameEvent.endDate.toString()}/>
+		{#if data.gameEvent}
+			<Timer date={data.gameEvent.endDate.toString()} />
+		{:else}
+			<p>Il n'y a pas d'événement en cours</p>
+		{/if}
 	</div>
-	
+
 	<slot />
 </main>
-

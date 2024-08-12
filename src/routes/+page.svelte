@@ -1,5 +1,6 @@
 <script lang="ts">
 	import LeaderboardEntry from '$lib/LeaderboardEntry.svelte';
+	import TrackCharacterButton from '$lib/TrackCharacterButton.svelte';
 	import TrackCharacterModal from '$lib/TrackCharacterModal.svelte';
 	import type { PageData } from './$types';
 
@@ -13,7 +14,7 @@
 <div class="p-10 flex gap-2 justify-between">
 	<h1 class="text-2xl">Leaderboard</h1>
 
-	<btn class="btn btn-accent" onclick="my_modal_3.showModal()">+ Tracker un personnage</btn>
+	<TrackCharacterButton />
 </div>
 
 <div class="overflow-x-auto">
@@ -36,5 +37,5 @@
 </div>
 
 <div class="p-10 flex gap-2 justify-end items-end">
-	<btn class="btn btn-accent" onclick="my_modal_3.showModal()">+ Tracker un personnage</btn>
+	<TrackCharacterButton />
 </div>

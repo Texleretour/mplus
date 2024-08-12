@@ -17,7 +17,7 @@
 <tr class="hover">
 	<td>{i + 1}</td>
 	<a href={`/${character.realm}/${character.name}`}>
-		<td>{character.name + '-' + character.realm}</td>
+		<td>{character.name}</td>
 	</a>
 
 	<td>

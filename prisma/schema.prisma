@@ -16,8 +16,9 @@ model Character {
   updatedAt          DateTime            @updatedAt
   name               String
   realm              String
+  class              String
   mplusRatingRecords MplusRatingRecord[]
-  gameEvents         GameEvent[]          
+  gameEvents         GameEvent[]
 }
 
 model MplusRatingRecord {

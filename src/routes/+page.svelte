@@ -9,6 +9,10 @@
 
 		return trimmed_realm;
 	}
+
+	const raiderIOCharacterURL = 'https://raider.io/characters';
+	const blizzardCharacterURL = 'https://worldofwarcraft.blizzard.com/fr-fr/character';
+	const warcraftLogsCharacterURL = 'https://www.warcraftlogs.com/character';
 </script>
 
 <dialog id="my_modal_3" class="modal">
@@ -53,6 +57,7 @@
 			<tr>
 				<th>Rank</th>
 				<th>Character</th>
+				<th>Class</th>
 				<th>Links</th>
 				<th>Rating</th>
 			</tr>
@@ -66,22 +71,30 @@
 					</a>
 
 					<td>
+						<img
+							src={`/assets/images/class_icons/${character.class.toLowerCase()}_icon.png`}
+							alt="icone de classe"
+							class="h-6"
+						/>
+					</td>
+
+					<td>
 						<ul class="flex gap-2">
 							<li>
-								<a href={`https://raider.io/characters/eu/${character.realm}/${character.name}`}>
+								<a href={`${raiderIOCharacterURL}/eu/${character.realm}/${character.name}`}>
 									<img src="/assets/images/logo_raiderio.png" alt="logo raider io" class="h-6" />
 								</a>
 							</li>
 							<li>
 								<a
-									href={`https://worldofwarcraft.blizzard.com/fr-fr/character/eu/${trim_realm(character.realm)}/${character.name}`}
+									href={`${blizzardCharacterURL}/eu/${trim_realm(character.realm)}/${character.name}`}
 								>
 									<img src="/assets/images/logo_wow.png" alt="logo raider io" class="h-6" />
 								</a>
 							</li>
 							<li>
 								<a
-									href={`https://www.warcraftlogs.com/character/eu/${trim_realm(character.realm)}/${character.name}`}
+									href={`${warcraftLogsCharacterURL}/eu/${trim_realm(character.realm)}/${character.name}`}
 								>
 									<img
 										src="/assets/images/logo_warcraftlogs.png"

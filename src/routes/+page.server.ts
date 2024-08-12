@@ -54,6 +54,7 @@ export const actions = {
 			data: {
 				name: characterData.name,
 				realm: characterData.realm,
+				class: characterData.class,
 				gameEvents: {
 					connect: {
 						id: activeEvent.id
@@ -75,6 +76,7 @@ interface Character {
 	name: string;
 	realm: string;
 	rating: number;
+	class: string;
 }
 
 async function findCharacter(
@@ -97,6 +99,7 @@ async function findCharacter(
 	const character = {
 		name: data.name,
 		realm: data.realm,
+		class: data.class,
 		rating: data.mythic_plus_scores_by_season[0].scores.all
 	};
 

@@ -3,23 +3,31 @@
 
 	export let data: PageData;
 
+	function trim_realm(realm: string): string {
+		let trimmed_realm = realm.replace("'", '');
+		trimmed_realm = trimmed_realm.replace(' ', '');
+
+		return trimmed_realm;
+	}
 </script>
 
 <dialog id="my_modal_3" class="modal">
 	<div class="modal-box">
 		<form method="dialog">
-			<button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2 focus:outline-none">✕</button>
+			<button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2 focus:outline-none"
+				>✕</button
+			>
 		</form>
 		<h3 class="text-lg font-bold pb-8">Tracker un personnage</h3>
 		<form method="POST" class="flex flex-col gap-4">
 			<label class="input input-bordered flex items-center gap-2">
 				Nom
-				<input name="name" type="text" class="grow" placeholder="Putarhq"/>
+				<input name="name" type="text" class="grow" placeholder="Putarhq" />
 			</label>
 
 			<label class="input input-bordered flex items-center gap-2">
 				Royaume
-				<input name="realm" type="text" class="grow" placeholder="Rashgarroth"/>
+				<input name="realm" type="text" class="grow" placeholder="Rashgarroth" />
 			</label>
 
 			<div class="flex flex-col w-full items-end gap-2">
@@ -45,6 +53,7 @@
 			<tr>
 				<th>Rank</th>
 				<th>Character</th>
+				<th>Links</th>
 				<th>Rating</th>
 			</tr>
 		</thead>
@@ -52,10 +61,37 @@
 			{#each data.characters as character, i}
 				<tr class="hover">
 					<td>{i + 1}</td>
-					<!-- <a href={`https://raider.io/characters/eu/${character.realm}/${character.name}`}> -->
 					<a href={`/${character.realm}/${character.name}`}>
 						<td>{character.name + '-' + character.realm}</td>
 					</a>
+
+					<td>
+						<ul class="flex gap-2">
+							<li>
+								<a href={`https://raider.io/characters/eu/${character.realm}/${character.name}`}>
+									<img src="/assets/images/logo_raiderio.png" alt="logo raider io" class="h-6" />
+								</a>
+							</li>
+							<li>
+								<a
+									href={`https://worldofwarcraft.blizzard.com/fr-fr/character/eu/${trim_realm(character.realm)}/${character.name}`}
+								>
+									<img src="/assets/images/logo_wow.png" alt="logo raider io" class="h-6" />
+								</a>
+							</li>
+							<li>
+								<a
+									href={`https://www.warcraftlogs.com/character/eu/${trim_realm(character.realm)}/${character.name}`}
+								>
+									<img
+										src="/assets/images/logo_warcraftlogs.png"
+										alt="logo raider io"
+										class="h-6"
+									/>
+								</a>
+							</li>
+						</ul>
+					</td>
 
 					<td>{character.mplusRatingRecords[0]?.rating}</td>
 				</tr>

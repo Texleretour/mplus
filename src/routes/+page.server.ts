@@ -30,13 +30,19 @@ export const actions = {
 		const name = data.get('name');
 		const realm = data.get('realm');
 
+		// TODO Check if the realm exists in Europ to prevent a request to RIO API
+		if (name === '' || realm === '') {
+			console.log('No realm or name given');
+			return;
+		}
+
 		const activeEvent = await getActiveEvent();
 
 		if (!activeEvent) {
 			console.log('No active event found');
 			return;
 		}
-		
+
 		const characterData = await findCharacter(name, realm);
 
 		if (!characterData) {

@@ -3,50 +3,12 @@
 
 	export let data: PageData;
 
-	// let message = "";
-	// let isLoading = false;
-	// let name = '';
-	// let realm = '';
-
-	// async function checkCharacterExists() {
-	// 	isLoading = true;
-	// 	message = "";
-
-	// 	if (name === "" || realm === "") {
-	// 		message = "Veuillez remplir les champs";
-	// 		isLoading = false;
-	// 		return;
-	// 	}
-
-	// 	const response = await fetch(
-	// 		`https://raider.io/api/v1/characters/profile?region=eu&realm=${realm}&name=${name}&fields=mythic_plus_scores_by_season%3Acurrent`
-	// 	);
-	// 	const data = await response.json();
-
-	// 	if (data.statusCode === 400) {
-	// 		console.log(data.message);
-	// 		message = data.message;
-	// 		isLoading = false;
-
-	// 		return {
-	// 			characterFound: false,
-	// 			error: data.message
-	// 		};
-	// 	}
-
-	// 	const character = {
-	// 		name: data.name,
-	// 		realm: data.realm,
-	// 	};
-
-		
-	// }
 </script>
 
 <dialog id="my_modal_3" class="modal">
 	<div class="modal-box">
 		<form method="dialog">
-			<button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
+			<button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2 focus:outline-none">✕</button>
 		</form>
 		<h3 class="text-lg font-bold pb-8">Tracker un personnage</h3>
 		<form method="POST" class="flex flex-col gap-4">
@@ -95,7 +57,7 @@
 						<td>{character.name + '-' + character.realm}</td>
 					</a>
 
-					<td>{character.mplusRatingRecords[0].rating}</td>
+					<td>{character.mplusRatingRecords[0]?.rating}</td>
 				</tr>
 			{/each}
 		</tbody>
